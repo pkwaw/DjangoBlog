@@ -3,6 +3,8 @@ from turtle import mode
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.views.generic import CreateView
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -29,6 +31,7 @@ class Category(models.Model):
 
 
 
+
 # Create your models here
 class Post(models.Model):
     title = models.CharField(max_length=30)
@@ -42,7 +45,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
 
-    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
     tags = models.ManyToManyField(Tag, blank=True)
 
@@ -54,3 +57,4 @@ class Post(models.Model):
 
     def get_file_name(self):
         return os.path.basename(self.attached_file.name)
+
